@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import MarketPage from './pages/MarketPage';
-import WatchlistPage from './pages/WatchlistPage';
+import FavoritesPage from './pages/FavoritesPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CryptoDetailPage from './pages/CryptoDetailPage';
@@ -14,7 +14,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<MarketPage />} />
-          <Route path="/watchlist" element={<WatchlistPage />} />
+          <Route path="/ulubione" element={<FavoritesPage />} />
           <Route path="/coin/:id" element={<CryptoDetailPage />} />
           <Route path="/exchanges" element={<ExchangesPage />} />
           <Route path="/trending" element={<TrendingPage />} />

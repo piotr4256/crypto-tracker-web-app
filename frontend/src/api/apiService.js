@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 // Baza do symulacji watchlisty (i logowania)
-let MOCK_WATCHLIST = ['bitcoin', 'solana']; // Simulated DB for watchlist
+const STORAGE_KEY = 'crypto_pulse_watchlist';
+let MOCK_WATCHLIST = JSON.parse(localStorage.getItem(STORAGE_KEY)) || ['bitcoin', 'solana'];
+
+const saveToStorage = (data) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+};
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -94,6 +99,7 @@ export const apiService = {
     await delay(200);
     if (!MOCK_WATCHLIST.includes(cryptoId)) {
       MOCK_WATCHLIST.push(cryptoId);
+      saveToStorage(MOCK_WATCHLIST);
     }
     return { data: { success: true, watchlist: MOCK_WATCHLIST } };
   },
@@ -101,6 +107,7 @@ export const apiService = {
   removeFromWatchlist: async (cryptoId) => {
     await delay(200);
     MOCK_WATCHLIST = MOCK_WATCHLIST.filter(id => id !== cryptoId);
+    saveToStorage(MOCK_WATCHLIST);
     return { data: { success: true, watchlist: MOCK_WATCHLIST } };
   }
 };

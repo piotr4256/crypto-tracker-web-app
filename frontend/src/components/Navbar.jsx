@@ -47,11 +47,8 @@ const Navbar = () => {
     { name: 'Rynek', path: '/' },
     { name: 'Giełdy', path: '/exchanges' },
     { name: 'Trendy', path: '/trending' },
+    { name: 'Ulubione', path: '/ulubione' },
   ];
-
-  if (user) {
-    navLinks.push({ name: 'Moja Lista', path: '/watchlist' });
-  }
 
   const toggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

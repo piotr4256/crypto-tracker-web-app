@@ -4,17 +4,15 @@ import { useStore } from '../store/useStore';
 import { Star, TrendingUp, TrendingDown, BarChart2 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const WatchlistPage = () => {
+const FavoritesPage = () => {
   const { user, watchlist, toggleWatchlist, marketData: cryptos, isLoading: loading, error, fetchMarketData } = useStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
+    if (user) {
+      fetchMarketData();
     }
-    fetchMarketData();
-  }, [user, navigate, fetchMarketData]);
+  }, [user, fetchMarketData]);
 
   const handleToggleStar = (cryptoId) => {
     toggleWatchlist(cryptoId);
@@ -22,14 +20,41 @@ const WatchlistPage = () => {
 
   const favoriteCryptos = cryptos.filter(c => watchlist.includes(c.id));
 
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 max-w-6xl mx-auto">
+        <div className="relative mb-8">
+          <div className="absolute inset-0 bg-crypto-primary/20 rounded-full blur-2xl animate-pulse"></div>
+          <div className="relative bg-crypto-card/80 backdrop-blur-xl border border-gray-800 p-8 rounded-full shadow-2xl">
+            <Star size={64} className="text-gray-600" />
+          </div>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-tight">
+          Twoje <span className="text-crypto-primary text-glow-primary">Ulubione</span>
+        </h1>
+        <p className="text-gray-400 text-lg mb-8 max-w-md mx-auto">
+          Nie jesteś zalogowany. Aby móc dodawać i przeglądać swoje ulubione kryptowaluty, musisz posiadać konto.
+        </p>
+        <Link 
+          to="/login" 
+          className="btn-primary py-3 px-8 text-lg font-semibold flex items-center space-x-2 group"
+        >
+          <span>Zaloguj się</span>
+          <span className="group-hover:translate-x-1 transition-transform">→</span>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
         <div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">Moja <span className="text-crypto-purple text-glow-purple">Lista</span></h1>
-          <p className="text-gray-400 text-lg">Zarządzaj swoimi ulubionymi kryptowalutami</p>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">Twoje <span className="text-crypto-purple text-glow-purple">Ulubione</span></h1>
+          <p className="text-gray-400 text-lg">Zarządzaj swoimi wybranymi kryptowalutami</p>
         </div>
       </div>
+
 
       <div className="relative z-10 card overflow-hidden bg-crypto-card/60 backdrop-blur-xl border border-gray-800/80 hover:box-glow-purple transition-shadow duration-500 rounded-2xl">
         {loading ? (
@@ -127,4 +152,4 @@ const WatchlistPage = () => {
   );
 };
 
-export default WatchlistPage;
+export default FavoritesPage;
