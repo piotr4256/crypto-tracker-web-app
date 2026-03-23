@@ -1,4 +1,13 @@
+# IDE (PyCharm)
 .idea/
+
+# React / Vite cache
+.vite/
+node_modules/
+dist/
+
+# Python / Django
 venv/
 __pycache__/
 *.pyc
+db.sqlite3
