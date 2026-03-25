@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #pobrane biblioteki
     'rest_framework',
     'corsheaders',
+    'drf_spectacular',
 
     #Aplikacja
     'api',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,3 +124,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# --- Custom App Settings ---
+
+# CORS configuration
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Mój lokalny port deweloperski
+    "https://twoja-domena-frontendowa.vercel.app"  # Przyszły adres produkcyjny
+]
+
+# Cache Configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'coingecko-proxy-cache',
+    }
+}
+
+# Django REST Framework & Spectacular Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Crypto Pulse Proxy API',
+    'DESCRIPTION': 'API Proxy for CoinGecko with caching and 429 error handling',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
