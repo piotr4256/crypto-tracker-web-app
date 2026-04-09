@@ -12,7 +12,9 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const isProd = import.meta.env.PROD;
 const LOCAL_DJANGO_URL = 'http://127.0.0.1:8000/api';
-const COINGECKO_URL = 'https://api.coingecko.com/api/v3';
+const PROD_DJANGO_URL = 'https://crypto-pulse-web-app.onrender.com/api';
+
+const BASE_URL = isProd ? PROD_DJANGO_URL : LOCAL_DJANGO_URL;
 
 export const apiService = {
   login: async (email, password) => {
@@ -33,15 +35,8 @@ export const apiService = {
 
   getAllCryptos: async () => {
     try {
-      if (isProd) {
-        const response = await axios.get(`${COINGECKO_URL}/coins/markets`, {
-          params: { vs_currency: 'usd', order: 'market_cap_desc', per_page: 100, page: 1, sparkline: false }
-        });
-        return { data: response.data };
-      } else {
-        const response = await axios.get(`${LOCAL_DJANGO_URL}/market/`);
-        return { data: response.data };
-      }
+      const response = await axios.get(`${BASE_URL}/market/`);
+      return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania danych:', error);
       throw new Error('Nie udało się pobrać danych z rynku. Spróbuj ponownie później.');
@@ -50,15 +45,8 @@ export const apiService = {
 
   getMarketChart: async (id, days = 7) => {
     try {
-      if (isProd) {
-        const response = await axios.get(`${COINGECKO_URL}/coins/${id}/market_chart`, {
-          params: { vs_currency: 'usd', days }
-        });
-        return { data: response.data };
-      } else {
-        const response = await axios.get(`${LOCAL_DJANGO_URL}/coin/${id}/chart/`);
-        return { data: response.data };
-      }
+      const response = await axios.get(`${BASE_URL}/coin/${id}/chart/`);
+      return { data: response.data };
     } catch (error) {
       console.error(`Błąd pobierania wykresu dla ${id}:`, error);
       throw new Error('Nie udało się pobrać wykresu cenowego.');
@@ -67,15 +55,8 @@ export const apiService = {
 
   getExchanges: async (page = 1) => {
     try {
-      if (isProd) {
-        const response = await axios.get(`${COINGECKO_URL}/exchanges`, {
-          params: { per_page: 100, page }
-        });
-        return { data: response.data };
-      } else {
-        const response = await axios.get(`${LOCAL_DJANGO_URL}/exchanges/`);
-        return { data: response.data };
-      }
+      const response = await axios.get(`${BASE_URL}/exchanges/`);
+      return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania giełd:', error);
       throw new Error('Nie udało się pobrać listy giełd.');
@@ -84,13 +65,8 @@ export const apiService = {
 
   getTrending: async () => {
     try {
-      if (isProd) {
-        const response = await axios.get(`${COINGECKO_URL}/search/trending`);
-        return { data: response.data.coins };
-      } else {
-        const response = await axios.get(`${LOCAL_DJANGO_URL}/trending/`);
-        return { data: response.data.coins };
-      }
+      const response = await axios.get(`${BASE_URL}/trending/`);
+      return { data: response.data.coins || response.data };
     } catch (error) {
       console.error('Błąd pobierania trendków:', error);
       throw new Error('Nie udało się pobrać najnowszych trendów.');
@@ -99,13 +75,8 @@ export const apiService = {
 
   getGlobalStats: async () => {
     try {
-      if (isProd) {
-        const response = await axios.get(`${COINGECKO_URL}/global`);
-        return { data: response.data.data };
-      } else {
-        const response = await axios.get(`${LOCAL_DJANGO_URL}/global/`);
-        return { data: response.data };
-      }
+      const response = await axios.get(`${BASE_URL}/global/`);
+      return { data: response.data.data || response.data };
     } catch (error) {
       console.error('Błąd pobierania statystyk globalnych:', error);
       throw new Error('Nie udało się pobrać danych globalnych.');
