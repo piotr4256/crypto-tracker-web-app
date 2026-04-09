@@ -22,7 +22,7 @@ export const apiService = {
     }
     throw new Error('Invalid credentials');
   },
-  
+
   register: async (email, password) => {
     await delay(500);
     if (email && password) {
@@ -51,17 +51,17 @@ export const apiService = {
   getMarketChart: async (id, days = 7) => {
     try {
       if (isProd) {
-         const response = await axios.get(`${COINGECKO_URL}/coins/${id}/market_chart`, {
-           params: { vs_currency: 'usd', days }
-         });
-         return { data: response.data };
+        const response = await axios.get(`${COINGECKO_URL}/coins/${id}/market_chart`, {
+          params: { vs_currency: 'usd', days }
+        });
+        return { data: response.data };
       } else {
-         const response = await axios.get(`${LOCAL_DJANGO_URL}/coin/${id}/chart/`);
-         return { data: response.data };
+        const response = await axios.get(`${LOCAL_DJANGO_URL}/coin/${id}/chart/`);
+        return { data: response.data };
       }
     } catch (error) {
-       console.error(`Błąd pobierania wykresu dla ${id}:`, error);
-       throw new Error('Nie udało się pobrać wykresu cenowego.');
+      console.error(`Błąd pobierania wykresu dla ${id}:`, error);
+      throw new Error('Nie udało się pobrać wykresu cenowego.');
     }
   },
 
@@ -99,16 +99,16 @@ export const apiService = {
 
   getGlobalStats: async () => {
     try {
-       if (isProd) {
-         const response = await axios.get(`${COINGECKO_URL}/global`);
-         return { data: response.data.data };
-       } else {
-         const response = await axios.get(`${LOCAL_DJANGO_URL}/global/`);
-         return { data: response.data }; 
-       }
+      if (isProd) {
+        const response = await axios.get(`${COINGECKO_URL}/global`);
+        return { data: response.data.data };
+      } else {
+        const response = await axios.get(`${LOCAL_DJANGO_URL}/global/`);
+        return { data: response.data };
+      }
     } catch (error) {
-       console.error('Błąd pobierania statystyk globalnych:', error);
-       throw new Error('Nie udało się pobrać danych globalnych.');
+      console.error('Błąd pobierania statystyk globalnych:', error);
+      throw new Error('Nie udało się pobrać danych globalnych.');
     }
   },
 
