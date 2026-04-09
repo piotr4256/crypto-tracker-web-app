@@ -100,7 +100,7 @@ class GlobalStatsSerializer(serializers.Serializer):
     total_market_cap = serializers.SerializerMethodField()
     total_volume = serializers.SerializerMethodField()
     market_cap_percentage = serializers.DictField(child=serializers.FloatField(), required=False)
-    market_cap_change_percentage_24h_usd = serializers.FloatField(source='market_cap_change_percentage_24h_usd', required=False)
+    market_cap_change_percentage_24h_usd = serializers.FloatField(required=False)
 
     def get_total_market_cap(self, obj):
         tmc = obj.get('total_market_cap')
