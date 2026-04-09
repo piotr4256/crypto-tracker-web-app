@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useStore } from '../store/useStore';
 import { Star, TrendingUp, TrendingDown, Search, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import CryptoTicker from '../components/CryptoTicker';
 import PortfolioSection from '../components/PortfolioSection';
 import AnimatedHeroTitle from '../components/AnimatedHeroTitle';
 
@@ -75,10 +74,6 @@ const MarketPage = () => {
 
   return (
     <div className="space-y-12">
-      {/* Pasek Ticker */}
-      <div className="-mx-4 sm:-mx-8 lg:-mx-16 -mt-8 mb-8">
-        <CryptoTicker />
-      </div>
 
       {/* Hero Section / Title */}
       <div className="flex flex-col items-center justify-center relative z-10 px-2 sm:px-0 mb-12 text-center max-w-6xl mx-auto">
@@ -93,9 +88,9 @@ const MarketPage = () => {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-6 mb-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Wszystkie <span className="text-crypto-green text-glow-green">Kryptowaluty</span>
+            Wszystkie <span className="text-crypto-primary text-glow-primary">Kryptowaluty</span>
           </h2>
-          
+
           <div className="relative w-full max-w-md group mx-auto">
             <div className="absolute inset-0 bg-crypto-primary/20 rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-500"></div>
             <Search className="absolute left-4 top-3.5 text-crypto-primary z-10" size={20} />

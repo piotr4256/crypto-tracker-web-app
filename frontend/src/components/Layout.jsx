@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
+import CryptoTicker from './CryptoTicker';
 import AnimatedBackground from './AnimatedBackground';
 import ScrollToTopButton from './ScrollToTopButton';
 
@@ -9,6 +10,7 @@ const Layout = ({ children }) => {
       <AnimatedBackground />
       <div className="relative z-10 flex-1 flex flex-col bg-transparent">
           <Navbar />
+          <CryptoTicker />
           <main className="flex-1 container mx-auto px-4 py-8">
             {children}
           </main>

@@ -69,7 +69,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 inset-x-0 h-16 bg-crypto-bg/95 backdrop-blur-md border-b border-gray-800/50 z-50">
-      <div className="container mx-auto px-4 h-full flex items-center justify-between">
+      <div className="w-full px-4 md:px-10 h-full flex items-center justify-between">
         
         {/* Logo */}
         <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center space-x-2 text-crypto-primary hover:text-blue-400 transition-colors z-20">

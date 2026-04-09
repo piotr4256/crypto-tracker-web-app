@@ -33,14 +33,6 @@ const PortfolioSection = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto my-12 antialiased">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-wide">
-          Zbuduj swoje <span className="text-crypto-primary text-glow-primary">portfolio kryptowalutowe</span>
-        </h2>
-        <p className="text-gray-400 text-base max-w-2xl mx-auto">
-          Rozpocznij swoją podróż w świecie cyfrowych finansów.<br />  Śledź najpopularniejsze aktywa w jednym miejscu.
-        </p>
-      </div>
 
       {/* Tabs */}
       <div className="w-full overflow-x-auto pb-4 mb-4 hide-scrollbar">
