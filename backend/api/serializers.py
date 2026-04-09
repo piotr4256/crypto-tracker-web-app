@@ -16,6 +16,12 @@ class MarketCoinSerializer(serializers.Serializer):
     circulating_supply = serializers.FloatField(allow_null=True)
     total_supply = serializers.FloatField(allow_null=True)
     max_supply = serializers.FloatField(allow_null=True)
+    ath = serializers.FloatField(allow_null=True, required=False)
+    ath_change_percentage = serializers.FloatField(allow_null=True, required=False)
+    ath_date = serializers.CharField(allow_null=True, required=False)
+    atl = serializers.FloatField(allow_null=True, required=False)
+    atl_change_percentage = serializers.FloatField(allow_null=True, required=False)
+    atl_date = serializers.CharField(allow_null=True, required=False)
 
 class CoinDetailSerializer(serializers.Serializer):
     """ Serializuje dane z endpointu /coins/{id} obcinając zbędne informacje """
