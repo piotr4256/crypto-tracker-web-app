@@ -43,11 +43,22 @@ export const useStore = create((set, get) => ({
 
     set({ isLoading: true, error: null });
     try {
-        const [trendRes, globRes] = await Promise.all([
+        const [trendRes, globRes] = await Promise.allSettled([
            apiService.getTrending(),
            apiService.getGlobalStats()
         ]);
-        set({ trending: trendRes.data, globalStats: globRes.data, isLoading: false });
+        
+        let newTrending = trending;
+        let newGlobal = globalStats;
+        
+        if (trendRes.status === 'fulfilled') {
+            newTrending = trendRes.value.data;
+        }
+        if (globRes.status === 'fulfilled') {
+            newGlobal = globRes.value.data;
+        }
+
+        set({ trending: newTrending, globalStats: newGlobal, isLoading: false });
     } catch(err) {
         set({ error: err.message, isLoading: false });
     }
