@@ -16,6 +16,7 @@ const PROD_DJANGO_URL = 'https://crypto-pulse-web-app.onrender.com/api';
 
 const BASE_URL = isProd ? PROD_DJANGO_URL : LOCAL_DJANGO_URL;
 
+//atrapa do logowania
 export const apiService = {
   login: async (email, password) => {
     await delay(500);
@@ -25,6 +26,7 @@ export const apiService = {
     throw new Error('Invalid credentials');
   },
 
+  //atrapa do rejestracji
   register: async (email, password) => {
     await delay(500);
     if (email && password) {
