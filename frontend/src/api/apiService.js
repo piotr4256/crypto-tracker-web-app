@@ -10,7 +10,7 @@ const saveToStorage = (data) => {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://crypto-pulse-web-app.onrender.com/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,
