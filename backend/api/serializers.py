@@ -75,6 +75,7 @@ class TrendingItemSerializer(serializers.Serializer):
     thumb = serializers.URLField(allow_blank=True)
     price_btc = serializers.FloatField(allow_null=True)
     score = serializers.IntegerField(allow_null=True)
+    data = serializers.DictField(required=False)
 
 class TrendingSerializer(serializers.Serializer):
     """ Główny serializator pod trendy """
@@ -90,12 +91,13 @@ class GlobalStatsSerializer(serializers.Serializer):
     """ Serializuje statystyki globalne """
     active_cryptocurrencies = serializers.IntegerField()
     markets = serializers.IntegerField()
-    total_market_cap_usd = serializers.SerializerMethodField()
-    total_volume_usd = serializers.SerializerMethodField()
+    total_market_cap = serializers.SerializerMethodField()
+    total_volume = serializers.SerializerMethodField()
     market_cap_percentage = serializers.DictField(child=serializers.FloatField())
+    market_cap_change_percentage_24h_usd = serializers.FloatField(source='market_cap_change_percentage_24h_usd', required=False)
 
-    def get_total_market_cap_usd(self, obj):
-        return obj.get('total_market_cap', {}).get('usd')
+    def get_total_market_cap(self, obj):
+        return {"usd": obj.get('total_market_cap', {}).get('usd')}
 
-    def get_total_volume_usd(self, obj):
-        return obj.get('total_volume', {}).get('usd')
+    def get_total_volume(self, obj):
+        return {"usd": obj.get('total_volume', {}).get('usd')}

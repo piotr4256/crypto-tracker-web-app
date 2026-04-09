@@ -91,8 +91,7 @@ const TrendingPage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {trending.length > 0 ? (
-            trending.map((item) => {
-              const coin = item.item;
+            trending.map((coin) => {
               const isUp = coin.data?.price_change_percentage_24h?.usd >= 0;
 
               return (
