@@ -37,7 +37,7 @@ export const apiService = {
 
   getAllCryptos: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/market/`);
+      const response = await axios.get(`${BASE_URL}/markets/`);
       return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania danych:', error);
@@ -47,7 +47,7 @@ export const apiService = {
 
   getMarketChart: async (id, days = 7) => {
     try {
-      const response = await axios.get(`${BASE_URL}/coin/${id}/chart/`);
+      const response = await axios.get(`${BASE_URL}/coins/${id}/chart/`);
       return { data: response.data };
     } catch (error) {
       console.error(`Błąd pobierania wykresu dla ${id}:`, error);
