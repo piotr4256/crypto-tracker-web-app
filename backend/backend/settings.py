@@ -31,6 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Panel administracyjny
+    'unfold',
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -144,3 +150,12 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+UNFOLD = {
+    "SITE_TITLE": "Crypto Pulse Panel",
+    "SITE_HEADER": "Crypto Pulse",
+    "SITE_URL": "/",
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
