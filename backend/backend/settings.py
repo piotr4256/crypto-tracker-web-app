@@ -45,11 +45,6 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
-    #Panel administracyjny
-    'unfold',
-    "unfold.contrib.filters",
-    "unfold.contrib.forms",
-
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -146,17 +141,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-WHITENOISE_MANIFEST_STRICT = False
 
 # --- Custom App Settings ---
 
@@ -175,10 +159,5 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
-UNFOLD = {
-    "SITE_TITLE": "Crypto Pulse Panel",
-    "SITE_HEADER": "Crypto Pulse",
-    "SITE_URL": "/",
-}
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
