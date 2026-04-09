@@ -10,11 +10,11 @@ const saveToStorage = (data) => {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const isProd = import.meta.env.PROD;
-const LOCAL_DJANGO_URL = 'http://127.0.0.1:8000/api';
-const PROD_DJANGO_URL = 'https://crypto-pulse-web-app.onrender.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 
-const BASE_URL = isProd ? PROD_DJANGO_URL : LOCAL_DJANGO_URL;
+const apiClient = axios.create({
+  baseURL: API_URL,
+});
 
 export const apiService = {
   login: async (email, password) => {
@@ -24,7 +24,7 @@ export const apiService = {
     }
     throw new Error('Invalid credentials');
   },
-
+  
   register: async (email, password) => {
     await delay(500);
     if (email && password) {
@@ -35,7 +35,7 @@ export const apiService = {
 
   getAllCryptos: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/market/`);
+      const response = await apiClient.get('/markets/');
       return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania danych:', error);
@@ -45,17 +45,17 @@ export const apiService = {
 
   getMarketChart: async (id, days = 7) => {
     try {
-      const response = await axios.get(`${BASE_URL}/coin/${id}/chart/`);
+      const response = await apiClient.get(`/coins/${id}/chart/`, { params: { days } });
       return { data: response.data };
     } catch (error) {
-      console.error(`Błąd pobierania wykresu dla ${id}:`, error);
-      throw new Error('Nie udało się pobrać wykresu cenowego.');
+       console.error(`Błąd pobierania wykresu dla ${id}:`, error);
+       throw new Error('Nie udało się pobrać wykresu cenowego.');
     }
   },
 
   getExchanges: async (page = 1) => {
     try {
-      const response = await axios.get(`${BASE_URL}/exchanges/`);
+      const response = await apiClient.get('/exchanges/', { params: { page } });
       return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania giełd:', error);
@@ -65,8 +65,8 @@ export const apiService = {
 
   getTrending: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/trending/`);
-      return { data: response.data.coins || response.data };
+      const response = await apiClient.get('/trending/');
+      return { data: response.data.coins };
     } catch (error) {
       console.error('Błąd pobierania trendków:', error);
       throw new Error('Nie udało się pobrać najnowszych trendów.');
@@ -75,11 +75,11 @@ export const apiService = {
 
   getGlobalStats: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/global/`);
-      return { data: response.data.data || response.data };
+      const response = await apiClient.get('/global/');
+      return { data: response.data }; 
     } catch (error) {
-      console.error('Błąd pobierania statystyk globalnych:', error);
-      throw new Error('Nie udało się pobrać danych globalnych.');
+       console.error('Błąd pobierania statystyk globalnych:', error);
+       throw new Error('Nie udało się pobrać danych globalnych.');
     }
   },
 
