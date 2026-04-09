@@ -133,14 +133,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://twoja-domena-frontendowa.vercel.app"  # Przyszły adres produkcyjny
 ]
 
-# Cache Configuration
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'coingecko-proxy-cache',
-    }
-}
-
 # Django REST Framework & Spectacular Configuration
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',

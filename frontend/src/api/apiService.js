@@ -10,6 +10,8 @@ const saveToStorage = (data) => {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+const BASE_URL = 'http://127.0.0.1:8000/api';
+
 export const apiService = {
   login: async (email, password) => {
     await delay(500);
@@ -29,27 +31,18 @@ export const apiService = {
 
   getAllCryptos: async () => {
     try {
-      const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
-        params: {
-          vs_currency: 'usd',
-          order: 'market_cap_desc',
-          per_page: 100,
-          page: 1,
-          sparkline: false
-        }
-      });
+      const response = await axios.get(`${BASE_URL}/market/`);
       return { data: response.data };
     } catch (error) {
-      console.error('Błąd pobierania danych z CoinGecko:', error);
+      console.error('Błąd pobierania danych z Django:', error);
       throw new Error('Nie udało się pobrać danych z rynku. Spróbuj ponownie później.');
     }
   },
 
   getMarketChart: async (id, days = 7) => {
     try {
-       const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}/market_chart`, {
-         params: { vs_currency: 'usd', days }
-       });
+       // Obecnie backend zawsze zwraca dane z 7 dni (zignoruje parametr z frontu, lecz adres uległ zmianie)
+       const response = await axios.get(`${BASE_URL}/coin/${id}/chart/`);
        return { data: response.data };
     } catch (error) {
        console.error(`Błąd pobierania wykresu dla ${id}:`, error);
@@ -59,9 +52,7 @@ export const apiService = {
 
   getExchanges: async (page = 1) => {
     try {
-      const response = await axios.get('https://api.coingecko.com/api/v3/exchanges', {
-        params: { per_page: 100, page }
-      });
+      const response = await axios.get(`${BASE_URL}/exchanges/`);
       return { data: response.data };
     } catch (error) {
       console.error('Błąd pobierania giełd:', error);
@@ -71,7 +62,8 @@ export const apiService = {
 
   getTrending: async () => {
     try {
-      const response = await axios.get('https://api.coingecko.com/api/v3/search/trending');
+      const response = await axios.get(`${BASE_URL}/trending/`);
+      // Serializer z backendu podaje listę pod kluczem 'coins'
       return { data: response.data.coins };
     } catch (error) {
       console.error('Błąd pobierania trendków:', error);
@@ -81,8 +73,9 @@ export const apiService = {
 
   getGlobalStats: async () => {
     try {
-       const response = await axios.get('https://api.coingecko.com/api/v3/global');
-       return { data: response.data.data };
+       const response = await axios.get(`${BASE_URL}/global/`);
+       // Backend odfiltrowuje śmieci za nas, wiec uzywamy glownego response.data
+       return { data: response.data };
     } catch (error) {
        console.error('Błąd pobierania statystyk globalnych:', error);
        throw new Error('Nie udało się pobrać danych globalnych.');

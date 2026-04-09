@@ -19,7 +19,7 @@ class MarketListView(APIView):
         data = CoinGeckoService.get_markets()
         if isinstance(data, dict) and 'error' in data:
             return Response(data, status=data.get('status', 500))
-        
+            
         serializer = MarketCoinSerializer(data, many=True)
         return Response(serializer.data)
 
@@ -29,7 +29,7 @@ class CoinDetailView(APIView):
     """
     @extend_schema(responses=CoinDetailSerializer)
     def get(self, request, coin_id):
-        data = CoinGeckoService.get_coin_details(coin_id)
+        data = CoinGeckoService.get_coin_details(coin_id)   
         if isinstance(data, dict) and 'error' in data:
             return Response(data, status=data.get('status', 500))
             
@@ -68,7 +68,7 @@ class TrendingListView(APIView):
     """
     @extend_schema(responses=TrendingSerializer)
     def get(self, request):
-        data = CoinGeckoService.get_trending()
+        data = CoinGeckoService.get_trending()   
         if isinstance(data, dict) and 'error' in data:
             return Response(data, status=data.get('status', 500))
             
@@ -81,7 +81,7 @@ class GlobalStatsView(APIView):
     """
     @extend_schema(responses=GlobalStatsSerializer)
     def get(self, request):
-        data = CoinGeckoService.get_global()
+        data = CoinGeckoService.get_global()   
         if isinstance(data, dict) and 'error' in data:
             return Response(data, status=data.get('status', 500))
             
