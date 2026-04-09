@@ -95,15 +95,21 @@ class TrendingSerializer(serializers.Serializer):
 
 class GlobalStatsSerializer(serializers.Serializer):
     """ Serializuje statystyki globalne """
-    active_cryptocurrencies = serializers.IntegerField()
-    markets = serializers.IntegerField()
+    active_cryptocurrencies = serializers.IntegerField(required=False)
+    markets = serializers.IntegerField(required=False)
     total_market_cap = serializers.SerializerMethodField()
     total_volume = serializers.SerializerMethodField()
-    market_cap_percentage = serializers.DictField(child=serializers.FloatField())
+    market_cap_percentage = serializers.DictField(child=serializers.FloatField(), required=False)
     market_cap_change_percentage_24h_usd = serializers.FloatField(source='market_cap_change_percentage_24h_usd', required=False)
 
     def get_total_market_cap(self, obj):
-        return {"usd": obj.get('total_market_cap', {}).get('usd')}
+        tmc = obj.get('total_market_cap')
+        if isinstance(tmc, dict):
+            return {"usd": tmc.get('usd')}
+        return {"usd": None}
 
     def get_total_volume(self, obj):
-        return {"usd": obj.get('total_volume', {}).get('usd')}
+        vol = obj.get('total_volume')
+        if isinstance(vol, dict):
+            return {"usd": vol.get('usd')}
+        return {"usd": None}
