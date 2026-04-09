@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e89x^fx2v=b83xoo$fm@^^vy_b6j4$25!^2-@1s8%f#5nyvr!8'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-e89x^fx2v=b83xoo$fm@^^vy_b6j4$25!^2-@1s8%f#5nyvr!8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
+# Pobranie adresu przypisanego automatycznie przez usługę Render
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -55,6 +64,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,10 +144,7 @@ STATIC_URL = 'static/'
 # --- Custom App Settings ---
 
 # CORS configuration
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Mój lokalny port deweloperski
-    "https://twoja-domena-frontendowa.vercel.app"  # Przyszły adres produkcyjny
-]
+CORS_ALLOW_ALL_ORIGINS = True # Pozwalamy frontendowi na dowolnym porcie/domenie się łączyć
 
 # Django REST Framework & Spectacular Configuration
 REST_FRAMEWORK = {
