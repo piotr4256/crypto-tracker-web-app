@@ -30,7 +30,11 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-e89x^fx2v=b83xoo$fm@^^vy_b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost,crypto-pulse-web-app.onrender.com').split(',')
+ALLOWED_HOSTS = [
+    'crypto-pulse-web-app.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 
 # Pobranie adresu przypisanego automatycznie przez usługę Render
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
