@@ -45,6 +45,10 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    # Panel administracyjny (Unfold musi być przed django.contrib.admin)
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,12 +57,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #pobrane biblioteki
+    # pobrane biblioteki
     'rest_framework',
     'corsheaders',
     'drf_spectacular',
 
-    #Aplikacja
+    # Aplikacja
     'api',
 ]
 
@@ -161,3 +165,25 @@ SPECTACULAR_SETTINGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Konfiguracja UI Panela Admina (Unfold)
+UNFOLD = {
+    "SITE_TITLE": "CryptoPulse Admin",
+    "SITE_HEADER": "CryptoPulse",
+    "SITE_URL": "/",
+    "COLORS": {
+        "primary": {
+            "50": "250 255 255",
+            "100": "186 248 255",
+            "200": "112 238 255",
+            "300": "0 212 255",
+            "400": "0 186 230",
+            "500": "0 154 194",
+            "600": "0 120 153",
+            "700": "0 92 121",
+            "800": "0 68 93",
+            "900": "0 52 72",
+            "950": "0 34 50",
+        },
+    },
+}
